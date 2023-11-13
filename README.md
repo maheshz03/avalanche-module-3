@@ -21,7 +21,7 @@ This Solidity smart contract implements the ERC20 token standard and introduces 
 
 ### Usage
 
-1. **Mint Tokens:** Call the `mint` function to create new tokens and assign them to a specified address.
+1. **Mint Tokens:** Call the `mint` function to create new tokens and assign them to a specified address, only owner can mint tokens
 
 ```solidity
 function mint(address to, uint256 units) public onlyOwner {
@@ -50,6 +50,11 @@ function transfer(address to, uint256 units) public override returns (bool) {
 }
 ```
 
+## Author
+
+Mahesh
+
+maheshzabade24@gmail.com
 
 ## License
 
