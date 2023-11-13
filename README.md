@@ -1,57 +1,59 @@
-## TNToken - Ethereum ERC-20 Token Contract
+# TNToken - ERC20 Token Smart Contract
 
-## Overview
-
-TNToken is an Ethereum ERC-20 token contract that allows for the creation, minting, burning, and transfer of tokens. It is built on the OpenZeppelin library, leveraging the ERC20.sol contract for standard token functionality.
-
-
-## Inheritance from ERC20: 
-
-TNToken extends the ERC20 contract, inheriting standard token functionalities like transfer,balanceOf, and allowance.
+This Solidity smart contract implements the ERC20 token standard and introduces additional functionality to facilitate minting, burning, ownership control, and seamless token transfers. The contract is designed to be easily deployable and customizable for various tokenization needs.
 
 ## Features
 
-Ownership Control: The contract includes an ownership model, where the owner (TNOwner) has special privileges, such as the ability to mint new tokens.
+1. **ERC20 Standard Compliance:** TNToken adheres to the ERC20 standard, providing basic token functionalities such as transfer, balance inquiry, and approval for delegated transfers.
 
-## contract details 
+2. **Minting and Burning:** The contract allows the owner to mint new tokens and burn existing ones. Minting creates new tokens and adds them to the specified address, while burning removes tokens from the caller's balance.
 
-Name: TNToken
+3. **Ownership Control:** The contract includes a modifier `onlyOwner` that restricts certain functions to be callable only by the contract owner. This enhances security and control over critical operations.
 
-Symbol (Code): TNCode
+4. **Seamless Token Transfers:** Utilize the standard ERC20 `transfer` function to easily transfer tokens between addresses.
 
-Decimals: TNDecimals
+## Getting Started
 
-Initial Supply: TNInitialSupply
+### Deployment
 
+1. Deploy the TNToken contract, specifying the token's name, code, decimals, and initial supply.
+2. The contract owner will be set to the deployer's address.
 
+### Usage
 
+1. **Mint Tokens:** Call the `mint` function to create new tokens and assign them to a specified address.
 
-## Minting Tokens
-
-Minting involves the creation of new tokens. The mint function allows the contract owner to generate additional tokens and allocate them to a specified address. In the example below, 100 tokens are minted and assigned to the address '0x123...':
-
+```solidity
+function mint(address to, uint256 units) public onlyOwner {
+    require(units > 0, "Amount must be greater than 0.");
+    _mint(to, units);
+    emit TokensMinted(to, units);
+}
 ```
-TNToken.mint(0x123..., 100);
+
+2. **Burn Tokens:** Use the `burn` function to remove tokens from the caller's balance.
+
+```solidity
+function burn(uint256 units) public {
+    _burn(caller(), units);
+    emit TokensBurned(caller(), units);
+}
 ```
-## Burning Tokens
 
-Burning tokens is the process of permanently removing them from circulation. The burn function enables any token holder to reduce their balance by a specified amount. In this example, 50 tokens are burned from the caller's address:
+3. **Transfer Tokens:** Use the standard ERC20 `transfer` function to transfer tokens between addresses.
 
+```solidity
+function transfer(address to, uint256 units) public override returns (bool) {
+    _transfer(caller(), to, units);
+    emit Transfer(caller(), to, units);
+    return true;
+}
 ```
-TNToken.burn(50);
-Transferring Tokens
-```
-## transfer tokens
-
-Transferring tokens allows the movement of tokens between addresses. The standard transfer function is overridden in TNToken to include an event log. The example below illustrates transferring 25 tokens from the caller's address to '0x456...':
-
-## Event Logging: 
-
-Important events such as token minting and burning are logged using Ethereum events. This allows external systems to listen for these events and react accordinglallowance.
 
 
-## Security Considerations
+## License
 
-Only the owner (TNOwner) should have access to the onlyOwner functions, such as minting new tokens. Ensure the private key associated with TNOwner is secure.
+This smart contract is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-Be cautious with token transfers and burning, as these operations may have financial implications for token holders.
+---
+
