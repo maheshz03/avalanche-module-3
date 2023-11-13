@@ -4,6 +4,15 @@
 
 TNToken is an Ethereum ERC-20 token contract that allows for the creation, minting, burning, and transfer of tokens. It is built on the OpenZeppelin library, leveraging the ERC20.sol contract for standard token functionality.
 
+## OpenZeppelin Library Integration
+
+TNToken incorporates the OpenZeppelin library for its ERC-20 implementation, ensuring industry-standard security and functionality. Before deploying TNToken, make sure to install the OpenZeppelin contracts:
+
+```
+npm install @openzeppelin/contracts
+
+```
+
 ## Features
 
 Ownership Control: The contract includes an ownership model, where the owner (TNOwner) has special privileges, such as the ability to mint new tokens.
@@ -16,7 +25,9 @@ Ownership Control: The contract includes an ownership model, where the owner (TN
 
 Important events such as token minting and burning are logged using Ethereum events. This allows external systems to listen for these events and react accordingly.
 
-## Inheritance from ERC20: TNToken extends the ERC20 contract, inheriting standard token functionalities like transfer, balanceOf, and allowance.
+## Inheritance from ERC20: 
+
+TNToken extends the ERC20 contract, inheriting standard token functionalities like transfer, balanceOf, and allowance.
 
 ## contract details 
 
