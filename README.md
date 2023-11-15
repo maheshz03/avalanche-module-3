@@ -11,14 +11,14 @@ This Solidity smart contract, named TKNToken, is an implementation of the ERC-20
 
 ## Functions
 
-### mintTKN
+### mint
 - *Description:* Mint new tokens and assign them to a specified account.
 - *Parameters:*
   - address account: The account to which new tokens will be minted.
   - uint256 mintUnits: The number of tokens to mint.
 - *Access:* Only the contract owner can call this function.
 
-### burnTKN
+### burn
 - *Description:* Burn a specified amount of tokens owned by the caller.
 - *Parameters:*
   - uint256 burnUnits: The number of tokens to burn.
@@ -42,5 +42,9 @@ For more details on ERC-20 token standards and OpenZeppelin library, refer to th
 - [ERC-20 Token Standard](https://eips.ethereum.org/EIPS/eip-20)
 - [OpenZeppelin Contracts - ERC-20](https://docs.openzeppelin.com/contracts/4.x/api/token/erc20)
 
+## Author
+Mahesh
+
+maheshzabade24@gmail.com
 ## License
 This smart contract is licensed under the MIT License.
