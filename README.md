@@ -1,64 +1,46 @@
-# TNToken - ERC20 Token Smart Contract
+# TKNToken Smart Contract
 
-This Solidity smart contract implements the ERC20 token standard and introduces additional functionality to facilitate minting, burning, ownership control, and seamless token transfers. The contract is designed to be easily deployable and customizable for various tokenization needs.
+## Overview
+This Solidity smart contract, named TKNToken, is an implementation of the ERC-20 token standard using the OpenZeppelin library. The contract provides functionalities for creating and managing a token named "Shark" with the symbol "SRK". It includes features such as minting new tokens, burning existing tokens, and transferring tokens between addresses.
 
-## Features
+## Contract Details
+- *Name:* TKNToken
+- *Symbol:* SRK
+- *Decimals:* 18 (standard for most ERC-20 tokens)
+- *Total Supply:* The total supply is set during deployment and can be obtained using the totalSupply() function.
 
-1. **ERC20 Standard Compliance:** TNToken adheres to the ERC20 standard, providing basic token functionalities such as transfer, balance inquiry, and approval for delegated transfers.
+## Functions
 
-2. **Minting and Burning:** The contract allows the owner to mint new tokens and burn existing ones. Minting creates new tokens and adds them to the specified address, while burning removes tokens from the caller's balance.
+### mintTKN
+- *Description:* Mint new tokens and assign them to a specified account.
+- *Parameters:*
+  - address account: The account to which new tokens will be minted.
+  - uint256 mintUnits: The number of tokens to mint.
+- *Access:* Only the contract owner can call this function.
 
-3. **Ownership Control:** The contract includes a modifier `onlyOwner` that restricts certain functions to be callable only by the contract owner. This enhances security and control over critical operations.
+### burnTKN
+- *Description:* Burn a specified amount of tokens owned by the caller.
+- *Parameters:*
+  - uint256 burnUnits: The number of tokens to burn.
+- *Access:* Any account that owns the tokens can burn them.
 
-4. **Seamless Token Transfers:** Utilize the standard ERC20 `transfer` function to easily transfer tokens between addresses.
+### transferTKN
+- *Description:* Transfer tokens from the caller's account to a specified recipient.
+- *Parameters:*
+  - address recipient: The account to receive the transferred tokens.
+  - uint256 transferUnits: The number of tokens to transfer.
+- *Access:* Any account that owns the tokens can initiate a transfer.
 
-## Getting Started
+## Deployment
+The contract is deployed with an initial supply of tokens, and the deploying address becomes the owner of the contract.
 
-### Deployment
+## Usage
+The TKNToken contract provides a simple and secure way to manage and transfer tokens on the Ethereum blockchain.
 
-1. Deploy the TNToken contract, specifying the token's name, code, decimals, and initial supply.
-2. The contract owner will be set to the deployer's address.
+For more details on ERC-20 token standards and OpenZeppelin library, refer to the official documentation:
 
-### Usage
-
-1. **Mint Tokens:** Call the `mint` function to create new tokens and assign them to a specified address, only owner can mint tokens
-
-```solidity
-function mint(address to, uint256 units) public onlyOwner {
-    require(units > 0, "Amount must be greater than 0.");
-    _mint(to, units);
-    emit TokensMinted(to, units);
-}
-```
-
-2. **Burn Tokens:** Use the `burn` function to remove tokens from the caller's balance.
-
-```solidity
-function burn(uint256 units) public {
-    _burn(caller(), units);
-    emit TokensBurned(caller(), units);
-}
-```
-
-3. **Transfer Tokens:** Use the standard ERC20 `transfer` function to transfer tokens between addresses.
-
-```solidity
-function transfer(address to, uint256 units) public override returns (bool) {
-    _transfer(caller(), to, units);
-    emit Transfer(caller(), to, units);
-    return true;
-}
-```
-
-## Author
-
-Mahesh
-
-maheshzabade24@gmail.com
+- [ERC-20 Token Standard](https://eips.ethereum.org/EIPS/eip-20)
+- [OpenZeppelin Contracts - ERC-20](https://docs.openzeppelin.com/contracts/4.x/api/token/erc20)
 
 ## License
-
-This smart contract is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
+This smart contract is licensed under the MIT License.
