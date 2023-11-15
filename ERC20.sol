@@ -1,49 +1,40 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract TNToken is ERC20 {
-    address public TNOwner;
+contract TKNToken is ERC20 {
+    address public owner;
 
-    event TokensMinted(address indexed to, uint256 amount);
-    event TokensBurned(address indexed from, uint256 amount);
-    
+    event TokenTransfer(address indexed from, address indexed to, uint256 units);
+
     modifier onlyOwner() {
-        require(caller() == TNOwner, "Only the contract owner can call this function.");
+        require(msg.sender == owner || address(this) == owner, "Only the owner can Mint tokens.");
         _;
     }
 
-    constructor(
-        string memory TNName,
-        string memory TNCode,
-        uint8 TNDecimals,
-        uint256 TNInitialSupply
-    ) ERC20(TNName, TNCode) {
-        TNOwner = caller();
-        _mint(caller(), TNInitialSupply * (10**TNDecimals));
+    constructor(uint256 initialSupply) ERC20("Shark", "SRK") {
+        _mint(msg.sender, initialSupply);
+        owner = msg.sender;
     }
 
-    function mint(address to, uint256 units) public onlyOwner {
-        require(units > 0, "Amount must be greater than 0.");
-        _mint(to, units);
-        emit TokensMinted(to, units);
+    function mint(address account, uint256 mintUnits) public onlyOwner {
+        require(account != address(0), "Invalid address");
+        _mint(account, mintUnits);
+        emit TokenTransfer(address(0), account, mintUnits);
     }
 
-    function burn(uint256 units) public {
-        _burn(caller(), units);
-        emit TokensBurned(caller(), units);
+    function burn (uint256 burnUnits) public {
+        require(balanceOf(msg.sender) >= burnUnits, "Insufficient TKN funds");
+        _burn(msg.sender, burnUnits);
+        emit TokenTransfer(msg.sender, address(0), burnUnits);
     }
 
-    function transfer(address to, uint256 units) public override returns (bool) {
-        _transfer(caller(), to, units);
-        emit Transfer(caller(), to, units);
+    function transferTKN(address recipient, uint256 transferUnits) public returns (bool) {
+        require(recipient != address(0), "Invalid recipient");
+        _transfer(msg.sender, recipient, transferUnits);
+        emit TokenTransfer(msg.sender, recipient, transferUnits);
         return true;
     }
-
-    function caller() internal view returns (address) {
-        return msg.sender;
-    }
 }
-
 
